@@ -19,6 +19,10 @@ class ClientApi {
         val matchV4: MatchV4 = retrofit.create(MatchV4::class.java)
         val spectatorV4: SpectatorV4 = retrofit.create(SpectatorV4::class.java)
         val tftLeagueV1: TftLeagueV1 = retrofit.create(TftLeagueV1::class.java)
+        val tftMatchV1: TftMatchV1 = retrofit.create(TftMatchV1::class.java)
+        val tftSummonerV1: TftSummonerV1 = retrofit.create(TftSummonerV1::class.java)
+        val lorRankedV1: LorRankedV1 = retrofit.create(LorRankedV1::class.java)
+
     }
 }
 
