@@ -21,5 +21,5 @@ interface TftMatchV1 {
      * Get a match by match id
      */
     @GET("/tft/match/v1/matches/{matchId}")
-    fun getMatchById(@Path("matchId") matchId: String): Call<MatchDTO>
+    fun getMatchById(@Path("matchId") matchId: String): Call<MatchDto>
 }

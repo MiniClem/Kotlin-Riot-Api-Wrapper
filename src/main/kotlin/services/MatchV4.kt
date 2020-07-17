@@ -1,11 +1,9 @@
 package services
 
-import org.jetbrains.annotations.Nullable
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import retrofit2.http.QueryMap
 
 interface MatchV4 {
 
@@ -21,7 +19,7 @@ interface MatchV4 {
      * @param matchId The match ID
      */
     @GET("/lol/match/v4/matches/{matchId}")
-    fun getMatchById(@Path("matchId") matchId: Long): Call<MatchDTO>
+    fun getMatchById(@Path("matchId") matchId: Long): Call<MatchDto>
 
     /**
      * Get match by match ID and tournament code
@@ -32,7 +30,7 @@ interface MatchV4 {
     fun getMatchByIdAndTournament(
         @Path("matchId") matchId: Long,
         @Path("tournamentCode") tournamentCode: String
-    ): Call<MatchDTO>
+    ): Call<MatchDto>
 
     /**
      * Get matchlist for games played on given account ID and platform ID and filtered using given filter parameters, if any.
@@ -81,7 +79,7 @@ interface MatchV4 {
         @Query("beginTime") beginTime: Long?,
         @Query("endIndex") endIndex: Int?,
         @Query("beginIndex") beginIndex: Int?
-    ): Call<MatchlistDTO>
+    ): Call<MatchlistDto>
 
 
     /**
@@ -91,23 +89,23 @@ interface MatchV4 {
      * @param matchId The match ID
      */
     @GET("/lol/match/v4/timelines/by-match/{matchId}")
-    fun getMatchTimelineById(@Path("matchId") matchId: Long): Call<MatchTimelineDTO>
+    fun getMatchTimelineById(@Path("matchId") matchId: Long): Call<MatchTimelineDto>
 }
 
-data class MatchDTO(
+data class MatchDto(
     val gameId: Long,
     val participantIdentities: List<ParticipantIdentityDto>,    // Participant identity information. Participant identity information is purposefully excluded for custom games.
     val queueId: Int,                                           // Please refer to the Game Constants documentation
     val gameType: String,                                       // Please refer to the Game Constants documentation
     val gameDuration: Long,                                     // Match duration in seconds
-    val teams: List<TeamStatsDTO>,                              // Team information
+    val teams: List<TeamStatsDto>,                              // Team information
     val platformId: String,                                     // Platform where the match was played
     val gameCreation: Long,                                     // Designates the timestamp when champion select ended and the loading screen appeared, NOT when the game timer was at 0:00
     val seasonId: Int,                                          // Please refer to the Game Constants documentation
     val gameVersion: String,                                    // The major.minor version typically indicates the patch the match was played on
     val mapId: Int,                                             // Please refer to the Game Constants documentation
     val gameMode: String,                                       // Please refer to the Game Constants documentation
-    val participants: List<ParticipantDTO>                      // Participant information
+    val participants: List<ParticipantDto>                      // Participant information
 )
 
 data class ParticipantIdentityDto(
@@ -115,12 +113,12 @@ data class ParticipantIdentityDto(
     val player: PlayerDTO   // Player information not included in the response for custom matches. Custom matches are considered private unless a tournament code was used to create the match.
 )
 
-data class TeamStatsDTO(
+data class TeamStatsDto(
     val towerKills: Int,            // Number of towers the team destroyed
     val riftHeraldKills: Int,       // Number of times the team killed Rift Herald
     val firstBlood: Boolean,        // Flag indicating whether or not the team scored the first blood
     val inhibitorKills: Int,        // Number of inhibitors the team destroyed
-    val bans: List<TeamBansDTO>,    // If match queueId has a draft, contains banned champion data, otherwise empty
+    val bans: List<TeamBansDto>,    // If match queueId has a draft, contains banned champion data, otherwise empty
     val firstBaron: Boolean,        // Flag indicating whether or not the team scored the first Baron kill
     val firstDragon: Boolean,       // Flag indicating whether or not the team scored the first Dragon kill
     val dominionVictoryScore: Int,  // For Dominion matches, specifies the points the team had at game end.
@@ -134,30 +132,30 @@ data class TeamStatsDTO(
     val win: String                 // String indicating whether or not the team won. There are only two values visibile in public match history. (Legal values: Fail, Win)
 )
 
-data class TeamBansDTO(
+data class TeamBansDto(
     val championId: Int,            // Banned championId
     val pickTurn: Int              // Turn during which the champion was banned
 )
 
-data class ParticipantDTO(
+data class ParticipantDto(
     val participantId: Int,
     val championId: Int,
-    val runes: List<RuneDTO>,               // List of legacy Rune information. Not included for matches played with Runes Reforged
-    val stats: ParticipantStatsDTO,         // Participant statistics
+    val runes: List<RuneDto>,               // List of legacy Rune information. Not included for matches played with Runes Reforged
+    val stats: ParticipantStatsDto,         // Participant statistics
     val teamId: Int,                        // 100 for blue side. 200 for red side
-    val timeline: ParticipantTimelineDTO,   // Participant timeline data
+    val timeline: ParticipantTimelineDto,   // Participant timeline data
     val spell1Id: Int,                      // First Summoner Spell id
     val spell2Id: Int,                      // Second Summoner Spell id.
     val highestAchievedSeasonTier: String,  // Highest ranked tier achieved for the previous season in a specific subset of queueIds, if any, otherwise null. Used to display border in game loading screen. Please refer to the Ranked Info documentation. (Legal values: CHALLENGER, MASTER, DIAMOND, PLATINUM, GOLD, SILVER, BRONZE, UNRANKED)
-    val masteries: List<MasteryDTO>         // List of legacy Mastery information. Not included for matches played with Runes Reforged
+    val masteries: List<MasteryDto>         // List of legacy Mastery information. Not included for matches played with Runes Reforged
 )
 
-data class RuneDTO(
+data class RuneDto(
     val runeId: Int,
     val rank: Int
 )
 
-data class ParticipantStatsDTO(
+data class ParticipantStatsDto(
     val item0: Int,
     val item2: Int,
     val totalUnitsHealed: Int,
@@ -268,7 +266,7 @@ data class ParticipantStatsDTO(
     val perkSubStyle: Int      // Secondary rune path,
 )
 
-data class ParticipantTimelineDTO(
+data class ParticipantTimelineDto(
     val participantId: Int,
     val csDiffPerMinDeltas: Map<String, Double>,            // Creep score difference versus the calculated lane opponent(s) for a specified period.
     val damageTakenPerMinDeltas: Map<String, Double>,       // Damage taken for a specified period.
@@ -281,7 +279,7 @@ data class ParticipantTimelineDTO(
     val goldPerMinDeltas: Map<String, Double>               // Gold for a specified period.
 )
 
-data class MasteryDTO(
+data class MasteryDto(
     val rank: Int,
     val masteryId: Int
 )
@@ -291,14 +289,14 @@ data class MasteryDTO(
  *  match the parameters of the request. Please paginate using beginIndex until you reach the end of a player's matchlist.
  *
  */
-data class MatchlistDTO(
+data class MatchlistDto(
     val startIndex: Int,
     val totalGames: Int,
     val endIndex: Int,
-    val matches: List<MatchReferenceDTO>
+    val matches: List<MatchReferenceDto>
 )
 
-data class MatchReferenceDTO(
+data class MatchReferenceDto(
     val gameId: Long,
     val role: String,
     val season: Int,
@@ -309,18 +307,18 @@ data class MatchReferenceDTO(
     val timestamp: Long
 )
 
-data class MatchTimelineDTO(
-    val frames: List<MatchFrameDTO>,
+data class MatchTimelineDto(
+    val frames: List<MatchFrameDto>,
     val frameInterval: Long
 )
 
-data class MatchFrameDTO(
-    val participantFrames: Map<String, MatchParticipantFrameDTO>,
-    val events: List<MatchEventDTO>,
+data class MatchFrameDto(
+    val participantFrames: Map<String, MatchParticipantFrameDto>,
+    val events: List<MatchEventDto>,
     val timestamp: Long
 )
 
-data class MatchParticipantFrameDTO(
+data class MatchParticipantFrameDto(
     val participantId: Int,
     val minionsKilled: Int,
     val teamScore: Int,
@@ -329,11 +327,11 @@ data class MatchParticipantFrameDTO(
     val level: Int,
     val xp: Int,
     val currentGold: Int,
-    val position: MatchPositionDTO,
+    val position: MatchPositionDto,
     val jungleMinionsKilled: Int
 )
 
-data class MatchPositionDTO(
+data class MatchPositionDto(
     val x: Int,
     val y: Int
 )
@@ -342,7 +340,7 @@ data class MatchPositionDTO(
  * @param position (Legal values: CHAMPION_KILL, WARD_PLACED, WARD_KILL, BUILDING_KILL, ELITE_MONSTER_KILL, ITEM_PURCHASED,
  *  ITEM_SOLD, ITEM_DESTROYED, ITEM_UNDO, SKILL_LEVEL_UP, ASCENDED_EVENT, CAPTURE_POInt, PORO_KING_SUMMON),
  */
-data class MatchEventDTO(
+data class MatchEventDto(
     val laneType: String,
     val skillSlot: Int,
     val ascendedType: String,
@@ -360,7 +358,7 @@ data class MatchEventDTO(
     val monsterType: String,
     val monsterSubType: String,
     val teamId: Int,
-    val position: MatchPositionDTO,
+    val position: MatchPositionDto,
     val killerId: Int,
     val timestamp: Long,
     val assistingParticipantIds: List<Int>,
