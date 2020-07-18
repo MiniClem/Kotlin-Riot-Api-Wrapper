@@ -1,4 +1,4 @@
-package services
+package services.endpoints
 
 import retrofit2.Call
 import retrofit2.http.GET
@@ -10,9 +10,6 @@ interface ChampionMasteryV4 {
     /**
      * @param encryptedSummonerId : Summoner ID associated with the player
      */
-    @Headers(
-        "X-Riot-Token: RGAPI-92c3deb2-2b8f-4634-92fc-03388771002f"
-    )
     @GET("/lol/champion-mastery/v4/champion-masteries/by-summoner/{encryptedSummonerId}")
     fun getChampionMasteriesBySummoner(@Path("encryptedSummonerId") encryptedSummonerId: String): Call<ChampionMasteryDTO>
 

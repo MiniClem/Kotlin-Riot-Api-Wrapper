@@ -1,4 +1,4 @@
-package services
+package services.endpoints
 
 import retrofit2.Call
 import retrofit2.Callback
