@@ -8,9 +8,7 @@ import retrofit2.http.Headers
 /*https://euw1.api.riotgames.com*/
 
 interface ChampionV3 {
-    @Headers(
-        "X-Riot-Token: RGAPI-92c3deb2-2b8f-4634-92fc-03388771002f"
-    )
+
     @GET("/lol/platform/v3/champion-rotations")
     fun getChampionRotationsSync(): Call<ChampionInfo>
 }

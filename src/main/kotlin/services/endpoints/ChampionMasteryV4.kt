@@ -17,18 +17,12 @@ interface ChampionMasteryV4 {
      * @param encryptedSummonerId : Summoner ID associated with the player
      * @param championId : Champion ID to retrieve Champion Mastery for
      */
-    @Headers(
-        "X-Riot-Token: RGAPI-92c3deb2-2b8f-4634-92fc-03388771002f"
-    )
     @GET("/lol/champion-mastery/v4/champion-masteries/by-summoner/{encryptedSummonerId}/by-champion/{championId}")
     fun getChampionMasteriesBySummonerAndChampion(
         @Path("encryptedSummonerId") encryptedSummonerId: String,
         @Path("championId") championId: Long
     ): Call<ChampionMasteryDTO>
 
-    @Headers(
-        "X-Riot-Token: RGAPI-92c3deb2-2b8f-4634-92fc-03388771002f"
-    )
     @GET("/lol/champion-mastery/v4/scores/by-summoner/{encryptedSummonerId}")
     fun getChampionMasteriesScoreBySummoner(
         @Path("encryptedSummonerId") encryptedSummonerId: String

@@ -6,27 +6,19 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 
 interface SummonerV4 {
-    @Headers(
-        "X-Riot-Token: RGAPI-92c3deb2-2b8f-4634-92fc-03388771002f"
-    )
+
     @GET("/lol/summoner/v4/summoners/by-account/{encryptedAccountId}")
     fun getSummonerByAccount(@Path("encryptedAccountId") encryptedAccountId: String): Call<SummonerDTO>
 
     /**
      * @param summonerName : Summoner Name
      */
-    @Headers(
-        "X-Riot-Token: RGAPI-92c3deb2-2b8f-4634-92fc-03388771002f"
-    )
     @GET("/lol/summoner/v4/summoners/by-name/{summonerName}")
     fun getSummonerByName(@Path("summonerName") summonerName: String): Call<SummonerDTO>
 
     /**
      * @param encryptedPUUID : Summoner Id
      */
-    @Headers(
-        "X-Riot-Token: RGAPI-92c3deb2-2b8f-4634-92fc-03388771002f"
-    )
     @GET("/lol/summoner/v4/summoners/by-puuid/{encryptedPUUID}")
     fun getSummonerByPUUID(@Path("encryptedPUUID") encryptedPUUID: String): Call<SummonerDTO>
 
@@ -35,9 +27,6 @@ interface SummonerV4 {
      *
      * @param encryptedSummonerId : Summoner Id
      */
-    @Headers(
-        "X-Riot-Token: RGAPI-92c3deb2-2b8f-4634-92fc-03388771002f"
-    )
     @GET("/lol/summoner/v4/summoners/{encryptedSummonerId}")
     fun getSummonerBySummonerId(@Path("encryptedSummonerId") encryptedSummonerId: String): Call<SummonerDTO>
 }

@@ -8,10 +8,12 @@ import services.endpoints.*
 object ClientApi {
 
     private val retrofit: Retrofit by lazy {
-        val client = OkHttpClient()
+        val client = OkHttpClient.Builder()
             .apply {
                 interceptors().add(HeaderInterceptor(ParamProperties()))
-            }
+            }.build()
+
+
 
         Retrofit.Builder()
             .client(client)
