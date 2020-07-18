@@ -27,3 +27,5 @@ hs_err_pid*
 build/
 
 .gradle/
+
+src/main/resources/param.properties
