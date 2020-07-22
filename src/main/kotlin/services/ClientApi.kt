@@ -7,70 +7,62 @@ import services.endpoints.*
 
 object ClientApi {
 
-    private lateinit var interceptorInterface: InterceptorInterface
-    private var platformRoutes: PlatformRoutes = PlatformRoutes.EUW1
-    private var regionalRoutes: RegionalRoutes = RegionalRoutes.EUROPE
+    lateinit var interceptorInterface: InterceptorInterface
+    var platformRoutes: PlatformRoutes = PlatformRoutes.EUW1
+    var regionalRoutes: RegionalRoutes = RegionalRoutes.EUROPE
 
-    /**
-     * You must provide this interface to the client service to use any endpoint
-     */
-    fun setToken(interceptorInterface: InterceptorInterface): ClientApi {
-        this.interceptorInterface = interceptorInterface
-        return this
-    }
-
-    /**
-     * Set the route to be used with the endpoints using the platform route parameter
-     * Default is [PlatformRoutes.EUW1]
-     */
-    fun setPlatformRoute(platformRoutes: PlatformRoutes): ClientApi {
-        this.platformRoutes = platformRoutes
-        return this
-    }
-
-    /**
-     * Set the route to be used with the endpoints using the platform route parameter
-     * Default is [PlatformRoutes.EUW1]
-     */
-    fun setRegionalRoute(regionalRoutes: RegionalRoutes): ClientApi {
-        this.regionalRoutes = regionalRoutes
-        return this
-    }
-
-    private val retrofit: Retrofit by lazy {
-        val client = OkHttpClient.Builder()
+    private val client: OkHttpClient by lazy {
+        OkHttpClient.Builder()
             .apply {
                 interceptors().add(HeaderInterceptor(interceptorInterface))
             }.build()
+    }
 
-
-
+    private val regionalRoute: Retrofit by lazy {
         Retrofit.Builder()
             .client(client)
-            .baseUrl("https://${platformRoutes.name}")
+            .baseUrl("https://${regionalRoutes.route}")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    val accountV1: AccountV1 = retrofit.create(AccountV1::class.java)
-    val championMasteryV4: ChampionMasteryV4 = retrofit.create(ChampionMasteryV4::class.java)
-    val championV3: ChampionV3 = retrofit.create(ChampionV3::class.java)
-    val clashV1: ClashV1 = retrofit.create(ClashV1::class.java)
-    val leagueExpV4: LeagueExpV4 = retrofit.create(LeagueExpV4::class.java)
-    val leagueV4: LeagueV4 = retrofit.create(LeagueV4::class.java)
-    val lolStatusV3: LolStatusV3 = retrofit.create(LolStatusV3::class.java)
-    val lorRankedV1: LorRankedV1 = retrofit.create(LorRankedV1::class.java)
-    val matchV4: MatchV4 = retrofit.create(MatchV4::class.java)
-    val spectatorV4: SpectatorV4 = retrofit.create(SpectatorV4::class.java)
-    val summonerV4: SummonerV4 = retrofit.create(SummonerV4::class.java)
-    val tftLeagueV1: TftLeagueV1 = retrofit.create(TftLeagueV1::class.java)
-    val tftMatchV1: TftMatchV1 = retrofit.create(TftMatchV1::class.java)
-    val tftSummonerV1: TftSummonerV1 = retrofit.create(TftSummonerV1::class.java)
-    val thirdPartyCodeV4: ThirdPartyCodeV4 = retrofit.create(ThirdPartyCodeV4::class.java)
-    val tournamentStubV4: TournamentStubV4 = retrofit.create(TournamentStubV4::class.java)
-    val tournamentV4: TournamentV4 = retrofit.create(TournamentV4::class.java)
-    val valContentV1: ValContentV1 = retrofit.create(ValContentV1::class.java)
-    val valMatchV1: ValMatchV1 = retrofit.create(ValMatchV1::class.java)
+    private val platformRoute: Retrofit by lazy {
+        Retrofit.Builder()
+            .client(client)
+            .baseUrl("https://${platformRoutes.route}")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    private val stubRoute: Retrofit by lazy {
+        Retrofit.Builder()
+            .client(client)
+            .baseUrl("https://${RegionalRoutes.AMERICAS.route}")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    object Services {
+        val accountV1: AccountV1 = regionalRoute.create(AccountV1::class.java)
+        val championMasteryV4: ChampionMasteryV4 = platformRoute.create(ChampionMasteryV4::class.java)
+        val championV3: ChampionV3 = platformRoute.create(ChampionV3::class.java)
+        val clashV1: ClashV1 = platformRoute.create(ClashV1::class.java)
+        val leagueExpV4: LeagueExpV4 = platformRoute.create(LeagueExpV4::class.java)
+        val leagueV4: LeagueV4 = platformRoute.create(LeagueV4::class.java)
+        val lolStatusV3: LolStatusV3 = platformRoute.create(LolStatusV3::class.java)
+        val lorRankedV1: LorRankedV1 = regionalRoute.create(LorRankedV1::class.java)
+        val matchV4: MatchV4 = platformRoute.create(MatchV4::class.java)
+        val spectatorV4: SpectatorV4 = platformRoute.create(SpectatorV4::class.java)
+        val summonerV4: SummonerV4 = platformRoute.create(SummonerV4::class.java)
+        val tftLeagueV1: TftLeagueV1 = platformRoute.create(TftLeagueV1::class.java)
+        val tftMatchV1: TftMatchV1 = regionalRoute.create(TftMatchV1::class.java)
+        val tftSummonerV1: TftSummonerV1 = platformRoute.create(TftSummonerV1::class.java)
+        val thirdPartyCodeV4: ThirdPartyCodeV4 = platformRoute.create(ThirdPartyCodeV4::class.java)
+        val tournamentStubV4: TournamentStubV4 = stubRoute.create(TournamentStubV4::class.java) // america only
+//        val tournamentV4: TournamentV4 = platformRoute.create(TournamentV4::class.java)
+//        val valContentV1: ValContentV1 = platformRoute.create(ValContentV1::class.java)
+        val valMatchV1: ValMatchV1 = platformRoute.create(ValMatchV1::class.java)
+    }
 }
 
 enum class PlatformRoutes(val route: String) {
