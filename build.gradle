@@ -42,8 +42,8 @@ publishing {
                     }
                 }
                 scm {
-                    connection = 'https://github.com/MiniClem/Kotlin-Riot-Api-Wrapper.git'
-                    developerConnection = 'https://github.com/MiniClem/Kotlin-Riot-Api-Wrapper.git'
+                    connection = 'scm:git:git://github.com/MiniClem/Kotlin-Riot-Api-Wrapper.git'
+                    developerConnection = 'scm:git:ssh://github.com/MiniClem/Kotlin-Riot-Api-Wrapper.git'
                     url = 'https://github.com/MiniClem/Kotlin-Riot-Api-Wrapper'
                 }
             }
