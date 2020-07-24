@@ -29,3 +29,5 @@ build/
 .gradle/
 
 src/main/resources/param.properties
+
+gradle.properties
