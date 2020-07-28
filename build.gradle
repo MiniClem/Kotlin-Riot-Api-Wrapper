@@ -8,7 +8,7 @@ plugins {
 }
 
 group 'io.github.miniclem'
-version '0.1.1-SNAPSHOT'
+version '0.1.3'
 
 java {
     withJavadocJar()
@@ -39,6 +39,11 @@ publishing {
                     license {
                         name = 'The Apache License, Version 2.0'
                         url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'MiniClem'
                     }
                 }
                 scm {
