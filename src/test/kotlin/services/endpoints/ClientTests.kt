@@ -1,6 +1,5 @@
 package services.endpoints
 
-import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
@@ -13,49 +12,58 @@ import retrofit2.Response
 import services.ClientApi
 import services.ParamProperties
 import services.PlatformRoutes
-import services.RegionalRoutes
+import kotlin.system.measureTimeMillis
 
 class ClientTests {
 
     init {
         ClientApi.apply {
-            platformRoutes = PlatformRoutes.EUW1
-            regionalRoutes = RegionalRoutes.EUROPE
             tokenProvider = ParamProperties()
         }
     }
 
     @Test
     @Timeout(5000)
-    fun `test switch base url`() = runBlocking {
-        // First, base url is pointing to the EUW1 platform
-        ClientApi.Services.championV3.getChampionRotations().enqueue(object :  Callback<ChampionInfo> {
-            override fun onFailure(call: Call<ChampionInfo>, t: Throwable) {
-                fail(t)
+    fun `given a former url, when I switch route after launching some other before, then I got response from different routes`() =
+        runBlocking {
+            val firstCallTime = measureTimeMillis {
+                // First, base url is pointing to the EUW1 platform
+                ClientApi.Services.championV3(PlatformRoutes.EUW1).getChampionRotations()
+                    .enqueue(object : Callback<ChampionInfo> {
+                        override fun onFailure(call: Call<ChampionInfo>, t: Throwable) {
+                            fail(t)
+                        }
+
+                        override fun onResponse(call: Call<ChampionInfo>, response: Response<ChampionInfo>) {
+//                            Assertions.assertTrue(response.isSuccessful)
+                            Assertions.assertTrue(response.raw().toString().contains("euw1", ignoreCase = true))
+                            println(response.raw())
+                        }
+                    })
             }
 
-            override fun onResponse(call: Call<ChampionInfo>, response: Response<ChampionInfo>) {
-                Assertions.assertTrue(response.raw().toString().contains("euw1", ignoreCase = true))
-                println(response.raw())
+            // Switching platform to JP1
+
+            // Base url should now point to the JP1 platform
+            val secondCallTime = measureTimeMillis {
+                ClientApi.Services.championV3(PlatformRoutes.JP1).getChampionRotations()
+                    .enqueue(object : Callback<ChampionInfo> {
+                        override fun onFailure(call: Call<ChampionInfo>, t: Throwable) {
+                            fail(t)
+                        }
+
+                        override fun onResponse(call: Call<ChampionInfo>, response: Response<ChampionInfo>) {
+//                            Assertions.assertTrue(response.isSuccessful)
+                            Assertions.assertTrue(response.raw().toString().contains("jp1", ignoreCase = true))
+                            println(response.raw())
+                        }
+
+                    })
             }
-        })
 
-        // Switching platform to JP1
-        ClientApi.platformRoutes = PlatformRoutes.JP1
+            println("First call launched in $firstCallTime\n")
+            println("Second call launched in $secondCallTime\n")
 
-        // Base url should now point to the JP1 platform
-         ClientApi.Services.championV3.getChampionRotations().enqueue(object : Callback<ChampionInfo>{
-             override fun onFailure(call: Call<ChampionInfo>, t: Throwable) {
-                 fail(t)
-             }
-
-             override fun onResponse(call: Call<ChampionInfo>, response: Response<ChampionInfo>) {
-                 Assertions.assertTrue(response.raw().toString().contains("jp1", ignoreCase = true))
-                 println(response.raw())
-             }
-
-         })
-
-        delay(4000)
-    }
+            delay(4000)
+        }
 }

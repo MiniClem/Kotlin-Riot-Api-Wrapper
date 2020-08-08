@@ -13,5 +13,7 @@ class ParamProperties : Properties(), TokenProvider {
         else throw IOException("You must create a file named 'param.properties' containing at least the 'TOKEN' variable with your API token")
     }
 
-    override fun getToken(): String = getProperty("TOKEN")
+    override fun getToken(): String {
+        return getProperty("TOKEN").also { println(this) }
+    }
 }
