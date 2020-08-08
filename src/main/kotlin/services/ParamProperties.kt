@@ -1,9 +1,10 @@
 package services
 
+import services.interceptors.TokenProvider
 import java.io.IOException
 import java.util.*
 
-class ParamProperties : Properties(), InterceptorInterface {
+class ParamProperties : Properties(), TokenProvider {
 
     init {
         val inputStream = ClassLoader.getSystemResourceAsStream("param.properties")

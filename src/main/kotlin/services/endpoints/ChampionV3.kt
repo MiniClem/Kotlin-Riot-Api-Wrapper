@@ -6,7 +6,7 @@ import retrofit2.http.GET
 interface ChampionV3 {
 
     @GET("/lol/platform/v3/champion-rotations")
-    fun getChampionRotationsSync(): Call<ChampionInfo>
+    fun getChampionRotations(): Call<ChampionInfo>
 }
 
 data class ChampionInfo(
