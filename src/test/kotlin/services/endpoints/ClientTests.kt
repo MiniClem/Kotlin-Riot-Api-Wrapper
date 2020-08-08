@@ -28,7 +28,7 @@ class ClientTests {
         runBlocking {
             val firstCallTime = measureTimeMillis {
                 // First, base url is pointing to the EUW1 platform
-                ClientApi.Services.championV3(PlatformRoutes.EUW1).getChampionRotations()
+                ClientApi.championV3(PlatformRoutes.EUW1).getChampionRotations()
                     .enqueue(object : Callback<ChampionInfo> {
                         override fun onFailure(call: Call<ChampionInfo>, t: Throwable) {
                             fail(t)
@@ -46,7 +46,7 @@ class ClientTests {
 
             // Base url should now point to the JP1 platform
             val secondCallTime = measureTimeMillis {
-                ClientApi.Services.championV3(PlatformRoutes.JP1).getChampionRotations()
+                ClientApi.championV3(PlatformRoutes.JP1).getChampionRotations()
                     .enqueue(object : Callback<ChampionInfo> {
                         override fun onFailure(call: Call<ChampionInfo>, t: Throwable) {
                             fail(t)

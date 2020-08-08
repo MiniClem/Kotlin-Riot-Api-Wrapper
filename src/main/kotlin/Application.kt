@@ -10,7 +10,7 @@ fun main() {
         tokenProvider = ParamProperties()
     }
 
-    ClientApi.Services.championV3(PlatformRoutes.EUW1).getChampionRotations().enqueue(object : Callback<ChampionInfo> {
+    ClientApi.championV3(PlatformRoutes.EUW1).getChampionRotations().enqueue(object : Callback<ChampionInfo> {
         override fun onFailure(call: Call<ChampionInfo>, t: Throwable) {
             t.printStackTrace()
         }
