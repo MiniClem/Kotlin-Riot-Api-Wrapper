@@ -5,16 +5,16 @@ Support synchrone and asynchrone call.
 ## Import
 ### Gradle 
 ```
-    implementation "io.github.miniclem:kotlin-api-riot-wrapper:0.2"
+implementation "io.github.miniclem:kotlin-api-riot-wrapper:0.2"
 ```
 
 ### Maven
 ```
-    <dependency>
-      <groupId>io.github.miniclem</groupId>
-      <artifactId>kotlin-api-riot-wrapper</artifactId>
-      <version>0.2</version>
-    </dependency>
+<dependency>
+  <groupId>io.github.miniclem</groupId>
+  <artifactId>kotlin-api-riot-wrapper</artifactId>
+  <version>0.2</version>
+</dependency>
 ```
 
 ## How to use
