@@ -66,3 +66,6 @@ Then put a file called `param.properties` in your resources folder with your API
 ```kotlin
 TOKEN=YOUR API KEY HERE
 ```
+
+## Issues
+Feel free to post issues while you find one, I would gladly try to fix it or accept pull request :)
