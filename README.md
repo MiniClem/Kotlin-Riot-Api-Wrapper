@@ -41,7 +41,7 @@ implementation "io.github.miniclem:kotlin-api-riot-wrapper:0.2"
 
 ### Provide your API key
 You must provide a way for your app to authenticate via the Riot API portal using you API key.  
-> See the official site : [Riot developer portal](https://developer.riotgames.com/)  
+> See the official site [Riot developer portal](https://developer.riotgames.com/)  
 
 Back to the library you will need to implement the `TokenProvider` interface and pass it to the `ClientApi`.  
 #### Example
@@ -61,6 +61,7 @@ class ParamProperties : Properties(), TokenProvider {
 }
 ```
 Then put a file called `param.properties` in your resources folder with your API key inside.  
+  
 *param.properties:*
 ```kotlin
 TOKEN=YOUR API KEY HERE
