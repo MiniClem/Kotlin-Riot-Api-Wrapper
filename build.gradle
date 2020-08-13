@@ -91,10 +91,10 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
 
     // Gson
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // Junit 5
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
