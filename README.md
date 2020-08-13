@@ -14,7 +14,7 @@ repositories {
 ```
 *module build.gradle*  
 ```
-implementation "io.github.miniclem:kotlin-api-riot-wrapper:0.2"
+implementation "io.github.miniclem:kotlin-api-riot-wrapper:0.3"
 ```
 
 ### Maven
@@ -22,7 +22,7 @@ implementation "io.github.miniclem:kotlin-api-riot-wrapper:0.2"
 <dependency>
   <groupId>io.github.miniclem</groupId>
   <artifactId>kotlin-api-riot-wrapper</artifactId>
-  <version>0.2</version>
+  <version>0.3</version>
 </dependency>
 ```
 
